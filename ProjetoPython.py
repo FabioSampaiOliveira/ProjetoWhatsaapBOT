@@ -1,5 +1,5 @@
 from time import sleep
-from pprint import pprint
+
 
 espetinho = [('ESPETO DE CARNE - R$:8,00', 8.00), ('ESPETO DE CARNE (com creme de alho) - R$:9,50', 9.50),
              ('ESPETO DE PICAHNHA - R$:15,00', 15.00), ('ESPETO DE CUPIM - R$:13,00', 13.00),
@@ -22,8 +22,9 @@ combos = [('COMBO 1 - R$:28,00', 28.00), ('COMBO 2 - R$:22,00', 22.00), ('COMBO 
           ('COMBO 4 - R$:22,00', 22.00), ('COMBO 5 - R$:22,00', 22.00), ('COMBO 6 - R$:35,00', 35.00),
           ('COMBO 7 - R$:35,00', 35.00)]
 
-lista_pedido = []
-total = []
+
+lista_itens_factura = []
+lista_precos_factura = []
 cont_esp = 0
 
 
@@ -45,6 +46,7 @@ def car_esp():
 [12]- MEDALHÃO DE FRANGO - R$:11,50
 ---------------------------------------------------""")
 
+
 def car_acom():
     print("""------------------------------------------------
           ACOMPANHAMENTOS
@@ -55,6 +57,7 @@ def car_acom():
 [4]- BATATA FRITA (G) - R$:24,00
 [5]- QUEIJO ASSADO c/MELAÇO OU s/MELAÇO R$:8,00
 ------------------------------------------------""")
+
 
 def car_bebida():
     print("""-----------------------------------------------
@@ -70,6 +73,7 @@ def car_bebida():
 [8]- DEVASSA PURO MALTE 350ml (lata) - R$:5,00
 [9]- HEINEKEN (long neck) - R$:9,00
 -----------------------------------------------""")
+
 
 def car_combo():
     print("""--------------------------------------
@@ -91,30 +95,31 @@ def car_combo():
 (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))
 -------------------------------------------------------------------------------------------------------------------""")
 
-def conta():
-    global lista_pedido
-    global total
 
-    print("""--------------------------------------
-              SUA CONTA
---------------------------------------""")
+def conta():
+    global lista_itens_factura
+    global lista_precos_factura
+
+    print("""|--------------------------------------|
+|              SUA CONTA               |
+|--------------------------------------|""")
     preco_final = 0
 
-    for i in range(0, len(lista_pedido)):
-        print(f'{lista_pedido[i]}')
-        preco_final += total[i]
-    print('--------------------------------------')
+    for i in range(0, len(lista_itens_factura)):
+        print(f'{lista_itens_factura[i]}')
+        preco_final += lista_precos_factura[i]
+    print('|--------------------------------------|')
     print()
-    print('--------------------------------------')
-    print(f'Total a pagar: R$ {preco_final:.2f}')
-    print('--------------------------------------')
+    print('|--------------------------------------|')
+    print(f'|Total a pagar: R$ {preco_final:.2f}|')
+    print('|--------------------------------------|')
     print()
-    print('Digite o endeço para a entrega.')
+    print('Digite o endereço para a entrega.')
 
 
 def efetuar_pedidos():
-    global lista_pedido
-    global total
+    global lista_itens_factura
+    global lista_precos_factura
     print("""---------------------------
       SUAS OPÇÕES:
 ---------------------------
@@ -139,8 +144,8 @@ def efetuar_pedidos():
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
                 quant = int(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
             quant_esp -= quant
-            lista_pedido.append(espetinho[sabor - 1][0])
-            total.append(espetinho[sabor - 1][1] * quant)
+            lista_itens_factura.append(espetinho[sabor - 1][0])
+            lista_precos_factura.append(espetinho[sabor - 1][1] * quant)
     elif op_pedido == '2':
         quant_acom = int(input('Quantos você deseja? '))
         while quant_acom > 0:
@@ -152,8 +157,8 @@ def efetuar_pedidos():
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
                 quant = int(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
             quant_acom -= quant
-            lista_pedido.append(acompanhamento[op_acom - 1][0])
-            total.append(acompanhamento[op_acom - 1][1] * quant)
+            lista_itens_factura.append(acompanhamento[op_acom - 1][0])
+            lista_precos_factura.append(acompanhamento[op_acom - 1][1] * quant)
     elif op_pedido == '3':
         quant_bebi = int(input('Quantos você deseja? '))
         while quant_bebi > 0:
@@ -165,9 +170,8 @@ def efetuar_pedidos():
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
                 quant = int(input(f'Quantas {bebidas[op_bebi - 1][0]} você deseja: '))
             quant_bebi -= quant
-            lista_pedido.append(bebidas[op_bebi - 1][0])
-            total.append(bebidas[op_bebi - 1][1] * quant)
-
+            lista_itens_factura.append(bebidas[op_bebi - 1][0])
+            lista_precos_factura.append(bebidas[op_bebi - 1][1] * quant)
     elif op_pedido == '4':
         quant_combo = int(input('Quantos você deseja? '))
         while quant_combo > 0:
@@ -179,13 +183,11 @@ def efetuar_pedidos():
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
                 quant = int(input(f'Quantas {combos[op_combo - 1][0]} você deseja: '))
             quant_combo -= quant
-            lista_pedido.append(combos[op_combo - 1][0])
-            total.append(combos[op_combo - 1][1] * quant)
-
+            lista_itens_factura.append(combos[op_combo - 1][0])
+            lista_precos_factura.append(combos[op_combo - 1][1] * quant)
     elif op_pedido == '5':
-        lista_pedido.clear()
-        total.clear()
-
+        lista_itens_factura.clear()
+        lista_precos_factura.clear()
     elif op_pedido == '6':
         return False
     return True
@@ -198,7 +200,8 @@ def op_pedi():
 
         if flag == False:
             print("""-------------------------------------------
-   Seu pedido foi realizado com sucesso!""")
+        Seu pedido foi realizado com sucesso!
+   -------------------------------------------""")
             conta()
             break
     exit()
@@ -227,6 +230,7 @@ def vol_car():
     elif voltar == '3':
         main()
 
+
 def menu_principal():
     print("""--------------------------
 Dígite uma das opções:
@@ -237,6 +241,7 @@ Dígite uma das opções:
 [4]- FINALIZAR ATENDIMENTO
 ---------------------------""")
 
+
 def promocao_do_dia():
     print("""--------------------------------------
           PROMOÇÃO DO DIA
@@ -244,6 +249,7 @@ def promocao_do_dia():
  ***** colocar a promoção aqui *****
 --------------------------------------""")
     vol_car()
+
 
 def cardapio():
     print("""---------------------------
@@ -287,23 +293,24 @@ def cardapio():
     elif car == '5':
         main()
 
+
 def pedido():
     print('----------------------------------')
     pronto = input('Pronto para fazer seu pedido [S/N]: ').upper().strip()[0]
+
     if pronto != 'S' and pronto != 'N':
         print("""Não entendi
 Dígite [S] para SIM | [N] para NÃO """)
         pronto = str(input('Pronto para fazer seu pedido [S/N]: ')).upper().strip()[0]
-
     elif pronto == 'S':
         op_pedi()
         print("""-----------------------------------
     Deseja fazer mais um pedido?
 Dígite [S] para SIM e [N] para NÃO
 -----------------------------------""")
-
     else:
         menu_principal()
+
 
 print("""----------------------------
 --  ESTAÇÃO DO ESPETINHO  --
@@ -313,12 +320,13 @@ Sou seu atendente vitrual
 Irei passar suas opções!""")
 sleep(0.5)
 
+
 def main():
     menu_principal()
     op1 = input('Digite a opção: ').strip()[0]
     if op1 != '1' and op1 != '2' and op1 != '3' and op1 != '4':
         print("""--------------------------
-  Não entendi a opção dígitada.""")
+Não entendi a opção dígitada.""")
         menu_principal()
         op1 = input('Digite a opção: ').strip()[0]
     if op1 == '1':
@@ -331,16 +339,13 @@ def main():
         return False
     return True
 
-while True:
-    flag = main()
 
-    if flag == False:
-        break
-print("""-----------------------------
-   Obrigado, volte sempre.
------------------------------""")
+if __name__ == '__main__':
+    while True:
+        flag = main()
 
-
-
-
-
+        if flag == False:
+            break
+    print("""-----------------------------
+       Obrigado, volte sempre.
+    -----------------------------""")
