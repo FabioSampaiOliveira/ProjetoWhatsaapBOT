@@ -1,4 +1,5 @@
 from time import sleep
+from datetime import datetime
 
 
 espetinho = [('ESPETO DE CARNE - R$:8,00', 8.00), ('ESPETO DE CARNE (com creme de alho) - R$:9,50', 9.50),
@@ -341,6 +342,15 @@ Não entendi a opção dígitada.""")
 
 
 if __name__ == '__main__':
+    hora = datetime.today().hour
+
+    if hora < 12:
+        print('Olá Bom Dia!')
+    elif hora < 18:
+        print('Olá Boa Tarde!')
+    else:
+        print('Olá Boa Noite!')
+    print('Seja Bem-vindo a sua loja online sou Omini!')
     while True:
         flag = main()
 
