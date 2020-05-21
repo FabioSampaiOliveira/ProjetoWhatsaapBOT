@@ -1,10 +1,13 @@
 from time import sleep
 from datetime import datetime
+from datetime import date
+
+dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-Feira', 'Sexta-feira', 'Sábado', 'Domingo']
 
 
 espetinho = [('ESPETO DE CARNE - R$:8,00', 8.00), ('ESPETO DE CARNE (com creme de alho) - R$:9,50', 9.50),
              ('ESPETO DE PICAHNHA - R$:15,00', 15.00), ('ESPETO DE CUPIM - R$:13,00', 13.00),
-             ('ESPETO DE CALABRESA DEFUMADA - R$7,00', 7.00), ('ESPETO DE FRANGO - R$:8,00', 8.00),
+             ('ESPETO DE CALABRESA DEFUMADA - R$:7,00', 7.00), ('ESPETO DE FRANGO - R$:8,00', 8.00),
              ('ESPETO DE COXINHA DE FRANGO - R$:9,50', 9.50), ('ESPETO DE CORAÇÃO - R$:8,00', 8.00),
              ('ESPETO DE KAFTA - R$:10,00', 10.00), ('ESPETO DE TOSCANA R$:9,00', 9.00),
              ('MEDALHÃO DE CARNE - R$:13,50', 13.50), ('MEDALHÃO DE FRANGO - R$:11,50', 11.50)]
@@ -15,7 +18,7 @@ acompanhamento = [('PÃO DE ALHO - R$:6,00', 6.00), ('BATATA FRITA (P) - R$:8,00
 
 bebidas = [('COCA-COLA 350ml (lata) - R$:5,00', 5.00), ('COCA-COLA (1 litro) - R$:9,00', 9.00),
            ('GUARANÁ 269ml (lata) - R$:3,00', 3.00), ('GUARANÁ 350ml (lata) - R$:3,50', 3.50),
-           ('GUARANÁ (1 litro) - R$:9,00', 9.00),('ÁGUA 300ml (sem gás) - R$:3,00', 3.00),
+           ('GUARANÁ (1 litro) - R$:9,00', 9.00), ('ÁGUA 300ml (sem gás) - R$:3,00', 3.00),
            ('ÁGUA 300ml (com gás) - R$:4,00', 4.00), ('DEVASSA PURO MALTE 350ml (lata) - R$:5,00', 5.00),
            ('HEINEKEN (long neck) - R$:9,00', 9.00)]
 
@@ -23,10 +26,21 @@ combos = [('COMBO 1 - R$:28,00', 28.00), ('COMBO 2 - R$:22,00', 22.00), ('COMBO 
           ('COMBO 4 - R$:22,00', 22.00), ('COMBO 5 - R$:22,00', 22.00), ('COMBO 6 - R$:35,00', 35.00),
           ('COMBO 7 - R$:35,00', 35.00)]
 
+promoção_do_dia = ['COMBO 1 - R$:28,00\n(Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata)',
+'COMBO 2 - R$:17,00\n(1 Espeto de Picanha + Batata Frita (P) + 1 Guaraná 269ml (lata))',
+'COMBO 3 - R$:28,00\n(File Acebolado + Batata Frita (M) + 1 Guaraná 269ml (lata))',
+'COMBO 4 - R$:17,00\n(1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata)',
+'COMBO 5 - R$:17,00\n(1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Guaraná 269ml (lata))',
+'COMBO 6 - R$:30,00\n(Carne do Sol Acebolada + Batata Frita (M) + 1 Guaraná 269ml (lata))',
+'COMBO 7 - R$:30,00\n(1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))']
+
 
 lista_itens_factura = []
 lista_precos_factura = []
 cont_esp = 0
+data = date.today()
+indice_da_semana = data.weekday()
+dia_da_semana = dias[indice_da_semana]
 
 
 def car_esp():
@@ -79,6 +93,9 @@ def car_bebida():
 def car_combo():
     print("""--------------------------------------
                COMBOS             
+--------------------------------------""")
+    print(f"""O COMBO {promoção_do_dia [indice_da_semana].split()[1]} ESTÁ EM PROMOÇÃO!!
+   Está custando {promoção_do_dia [indice_da_semana].split()[3]}
 --------------------------------------""")
     print("""[1]- COMBO 1 - R$:28,00
 (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata))
@@ -211,7 +228,7 @@ def op_pedi():
 def vol_car():
     print("""[1]- IR PARA O CARDÁPIO
 [2]- FAZER SEU PEDIDO
-[3[- VOLTAR AO MENU INICIAL
+[3]- VOLTAR AO MENU INICIAL
 --------------------------------------""")
     voltar = input('Dígite sua opção: ').strip()[0]
     if voltar != '1' and voltar != '2' and voltar != '3':
@@ -244,10 +261,10 @@ Dígite uma das opções:
 
 
 def promocao_do_dia():
-    print("""--------------------------------------
-          PROMOÇÃO DO DIA
+    print(f"""--------------------------------------
+PROMOÇÃO DO DIA ({dia_da_semana})
 --------------------------------------
- ***** colocar a promoção aqui *****
+{promoção_do_dia[indice_da_semana]}
 --------------------------------------""")
     vol_car()
 
@@ -312,16 +329,6 @@ Dígite [S] para SIM e [N] para NÃO
     else:
         menu_principal()
 
-
-print("""----------------------------
---  ESTAÇÃO DO ESPETINHO  --
-----------------------------
-Olá!
-Sou seu atendente vitrual
-Irei passar suas opções!""")
-sleep(0.5)
-
-
 def main():
     menu_principal()
     op1 = input('Digite a opção: ').strip()[0]
@@ -343,6 +350,10 @@ Não entendi a opção dígitada.""")
 
 if __name__ == '__main__':
     hora = datetime.today().hour
+    print("""----------------------------  
+--  ESTAÇÃO DO ESPETINHO  --           
+----------------------------""")
+    sleep(0.5)
 
     if hora < 12:
         print('Olá Bom Dia!')
@@ -350,7 +361,11 @@ if __name__ == '__main__':
         print('Olá Boa Tarde!')
     else:
         print('Olá Boa Noite!')
-    print('Seja Bem-vindo a sua loja online sou Omini!')
+    print("""Seja Bem-vindo! 
+Sou sua atendente virtual!
+eu me chamo Ana.
+irei passar agora suas opções""")
+    sleep(1)
     while True:
         flag = main()
 
