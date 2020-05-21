@@ -118,6 +118,30 @@ def conta():
     print('Digite o endereço para a entrega.')
 
 
+def verificar_tipo_pedido(valor='0', limite=1):
+    while not valor.isdigit():
+        print('Digite um número inteiro e positivo por-favor!')
+        valor = input(': ')
+    valor = int(valor)
+
+    if valor > limite or valor <= 0:
+        print('A opção que vôce digitou não é válida! Por-favor tente novamente digitando um número\nEntre 1 e {limite}!')
+        return verificar_tipo_pedido(input(': '), limite)
+    return valor
+
+
+def verificar_quant_pedida(valor='0'):
+    while not valor.isdigit():
+        print('Digite um número inteiro por-favor')
+        valor = input(': ')
+    valor = int(valor)
+    print(valor)
+    if valor <= 0:
+        print('A opção que vôce digitou não é válida! Por-favor tente novamente digitando um número positivo!')
+        return verificar_tipo_pedido(input(': '))
+    return valor
+
+
 def efetuar_pedidos():
     global lista_itens_factura
     global lista_precos_factura
@@ -135,11 +159,11 @@ def efetuar_pedidos():
     op_pedido = input('Digite a opção: ').strip()[0]
 
     if op_pedido == '1':
-        quant_esp = int(input('Quantos você deseja? '))
+        quant_esp = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_esp > 0:
             car_esp()
-            sabor = int(input(f'Dígite o sabor do Espetinho: '))
-            quant = int(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
+            sabor = verificar_tipo_pedido(input(f'Dígite o sabor do Espetinho: '), 12)
+            quant = verificar_quant_pedida(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
             while quant > quant_esp:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
@@ -148,11 +172,11 @@ def efetuar_pedidos():
             lista_itens_factura.append(espetinho[sabor - 1][0])
             lista_precos_factura.append(espetinho[sabor - 1][1] * quant)
     elif op_pedido == '2':
-        quant_acom = int(input('Quantos você deseja? '))
+        quant_acom = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_acom > 0:
             car_acom()
-            op_acom = int(input(f'Dígite o Acompanhamento: '))
-            quant = int(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
+            op_acom = verificar_tipo_pedido(input(f'Dígite o Acompanhamento: '), 5)
+            quant = verificar_quant_pedida(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
             while quant > quant_acom:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
@@ -161,11 +185,11 @@ def efetuar_pedidos():
             lista_itens_factura.append(acompanhamento[op_acom - 1][0])
             lista_precos_factura.append(acompanhamento[op_acom - 1][1] * quant)
     elif op_pedido == '3':
-        quant_bebi = int(input('Quantos você deseja? '))
+        quant_bebi = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_bebi > 0:
             car_bebida()
-            op_bebi = int(input(f'Dígite a Bebida: '))
-            quant = int(input(f'Quantos {bebidas[op_bebi - 1][0]} você deseja: '))
+            op_bebi = verificar_tipo_pedido(input(f'Dígite a Bebida: '), 9)
+            quant = verificar_quant_pedida(input(f'Quantos {bebidas[op_bebi - 1][0]} você deseja: '))
             while quant > quant_bebi:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
@@ -174,11 +198,11 @@ def efetuar_pedidos():
             lista_itens_factura.append(bebidas[op_bebi - 1][0])
             lista_precos_factura.append(bebidas[op_bebi - 1][1] * quant)
     elif op_pedido == '4':
-        quant_combo = int(input('Quantos você deseja? '))
+        quant_combo = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_combo > 0:
             car_combo()
-            op_combo = int(input(f'Dígite o Combo: '))
-            quant = int(input(f'Quantos {combos[op_combo - 1][0]} você deseja: '))
+            op_combo = verificar_tipo_pedido(input(f'Dígite o Combo: '), 7)
+            quant = verificar_quant_pedida(input(f'Quantos {combos[op_combo - 1][0]} você deseja: '))
             while quant > quant_combo:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
@@ -359,8 +383,3 @@ if __name__ == '__main__':
     print("""-----------------------------
        Obrigado, volte sempre.
     -----------------------------""")
-
-
-
-
-
