@@ -23,7 +23,7 @@ class WhatsappBot:
 
     def EnviarMensagens(self):
         def send():                                                                 #aqui é a função de enviar a mensagem
-            sleep(1,5)
+            sleep(1.5)
             botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
             botao_enviar.click()
 
