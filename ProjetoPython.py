@@ -144,7 +144,7 @@ def verificar_tipo_pedido(valor='0', limite=1):
     valor = int(valor)
 
     if valor > limite or valor <= 0:
-        print('A opção que vôce digitou não é válida! Por-favor tente novamente')
+        print('A opção que você digitou não é válida! Por-favor tente novamente')
         return verificar_tipo_pedido(input(': '), limite)
     return valor
 
@@ -156,7 +156,7 @@ def verificar_quant_pedida(valor='0'):
     valor = int(valor)
 
     if valor <= 0:
-        print('A opção que vôce digitou não é válida! Por-favor tente novamente')
+        print('A opção que você digitou não é válida! Por-favor tente novamente')
         return verificar_tipo_pedido(input(': '))
     return valor
 
