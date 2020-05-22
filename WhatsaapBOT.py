@@ -1,59 +1,66 @@
 from selenium import webdriver
 from time import sleep
-from datetime import datetime
 
-class WhatsappBot:
+
+class WhatsaapBot:
+
     def __init__(self):
-        hora = datetime.today().hour
-        self.mensagem1 = "* ESTAÇÃO DO ESPETINHO *"
-        if hora < 12:
-            self.mensagem2 = "Olá Bom Dia!"
-        elif hora < 18:
-            self.mensagem2 = "Olá Boa Tarde!"
-        else:
-            self.mensagem2 = "Olá Boa Noite!"
-        self.mensagem3 ="Seja Bem-vindo!"
-        self.mensagem4 = "me chamo * Ana *!"
-        self.mensagem5 = "Sou sua atendente virtual!!"
-        self.mensagem6 = "irei passar agora suas opções:"
-        self.grupos_ou_pessoas = ["ZapBOT"]                                      # Nome dos grupos ou pessoas a quem você deseja enviar a mensagem
         options = webdriver.ChromeOptions()
-        options.add_argument('lang=pt-br')                                       # coloca em português Brasil
-        self.driver = webdriver.Chrome(executable_path=r'./chromedriver.exe', options=options)   #local onde vc colocou seu chromedriver.exe
+        # Configurando a pasta profile, para mantermos os dados da seção
+        options.add_argument('lang=pt-br')
+        # Inicializa o webdriver
+        self.driver = webdriver.Chrome(executable_path=r'./chromedriver.exe', options=options)
+        # Abre o whatsappweb
+        self.driver.get("https://web.whatsapp.com/")
+        # Aguarda alguns segundos para validação manual do QrCode
+        self.driver.implicitly_wait(10)
+        self.grupos_ou_pessoas = ["André Balao"]
+        self.Bot_Msg = "Olá, sou o bot whatsapp! Para receber ajuda digite: help"
 
-    def EnviarMensagens(self):
-        def send():                                                                 #aqui é a função de enviar a mensagem
-            sleep(1.5)
-            botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
-            botao_enviar.click()
-
-        self.driver.get('https://web.whatsapp.com')
-        sleep(10)
+    def Abre_Conversa(self):
+        """ Abre a conversa com um contato especifico """
         for grupo_ou_pessoa in self.grupos_ou_pessoas:
-            campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{grupo_ou_pessoa}']")  #aqui é para quem ele vai mandar
+            campo_grupo = self.driver.find_element_by_xpath(f"//span[@title='{grupo_ou_pessoa}']")
             sleep(2)
             campo_grupo.click()
-            chat_box = self.driver.find_element_by_class_name('_1Plpp')     #aqui é onde vc dígita sua mensagem
-            chat_box.click()                                                #aqui ele vai clicar no chat box
-            chat_box.send_keys(self.mensagem1)
-            send()
-            chat_box.send_keys(self.mensagem2)
-            send()
-            chat_box.send_keys(self.mensagem3)
-            send()
-            chat_box.send_keys(self.mensagem4)
-            send()
-            chat_box.send_keys(self.mensagem5)
-            send()
-            chat_box.send_keys(self.mensagem6)
-            send()
-            sleep(10)
-            self.driver.quit()                          # fecha a página
+
+    def Envia_Msg(self, Bot_Msg):
+        """ Envia uma mensagem para a conversa aberta """
+        sleep(2)
+        # Seleciona acaixa de mensagem
+        chat_box = self.driver.find_element_by_class_name('_1Plpp')
+        # Digita a mensagem
+        chat_box.send_keys(Bot_Msg)
+        sleep(1)
+        # Seleciona botão enviar
+        botao_enviar = self.driver.find_element_by_xpath("//span[@data-icon='send']")
+        # Envia msg
+        botao_enviar.click()
+        sleep(2)
+
+    def Ultima_Msg(self):
+        """ Captura a ultima mensagem da conversa """
+        post = self.driver.find_elements_by_class_name("_3_7SH")
+        ultimo = len(post) - 1
+        # O texto da ultima mensagem
+        texto = post[ultimo].find_element_by_css_selector("span.selectable-text").text
+        return texto
 
 
+if __name__ == '__main__':
+    bot = WhatsaapBot()  # Inicia o objeto zapbot
+    bot.Abre_Conversa()  # Passando o numero ou o nome do contato
+    bot.Envia_Msg()
+    msg = ""  # Criando a variável msg
+    while msg != "/quit":
+        sleep(1)
+        msg = bot.Ultima_Msg()  # A cada loop recebe a ultima mensagem da conversa
+        if msg == "help":  # Retorna uma mensagem de ajuda
+            bot.Envia_Msg()
+            """Bot: Esse é um texto com os comandos válidos:
+                help (para ajuda)
+                quit (para sair)
+                """
 
-bot = WhatsappBot()
-bot.EnviarMensagens()
-
-
-#<div class="_3_7SH _3DFk6" role="text">span mas já é um começo                 # aqui é onde a mensagem recebida chega (irei usar no futuro)
+        elif msg == "quit":  # Encerra o programa
+            bot.Envia_Msg("Bye bye!")
