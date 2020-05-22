@@ -7,7 +7,7 @@ dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-Feira', 'Sexta-
 
 espetinho = [('ESPETO DE CARNE - R$:8,00', 8.00), ('ESPETO DE CARNE (com creme de alho) - R$:9,50', 9.50),
              ('ESPETO DE PICAHNHA - R$:15,00', 15.00), ('ESPETO DE CUPIM - R$:13,00', 13.00),
-             ('ESPETO DE CALABRESA DEFUMADA - R$:7,00', 7.00), ('ESPETO DE FRANGO - R$:8,00', 8.00),
+             ('ESPETO DE CALABRESA DEFUMADA - R$7,00', 7.00), ('ESPETO DE FRANGO - R$:8,00', 8.00),
              ('ESPETO DE COXINHA DE FRANGO - R$:9,50', 9.50), ('ESPETO DE CORAÇÃO - R$:8,00', 8.00),
              ('ESPETO DE KAFTA - R$:10,00', 10.00), ('ESPETO DE TOSCANA R$:9,00', 9.00),
              ('MEDALHÃO DE CARNE - R$:13,50', 13.50), ('MEDALHÃO DE FRANGO - R$:11,50', 11.50)]
@@ -18,7 +18,7 @@ acompanhamento = [('PÃO DE ALHO - R$:6,00', 6.00), ('BATATA FRITA (P) - R$:8,00
 
 bebidas = [('COCA-COLA 350ml (lata) - R$:5,00', 5.00), ('COCA-COLA (1 litro) - R$:9,00', 9.00),
            ('GUARANÁ 269ml (lata) - R$:3,00', 3.00), ('GUARANÁ 350ml (lata) - R$:3,50', 3.50),
-           ('GUARANÁ (1 litro) - R$:9,00', 9.00), ('ÁGUA 300ml (sem gás) - R$:3,00', 3.00),
+           ('GUARANÁ (1 litro) - R$:9,00', 9.00),('ÁGUA 300ml (sem gás) - R$:3,00', 3.00),
            ('ÁGUA 300ml (com gás) - R$:4,00', 4.00), ('DEVASSA PURO MALTE 350ml (lata) - R$:5,00', 5.00),
            ('HEINEKEN (long neck) - R$:9,00', 9.00)]
 
@@ -41,6 +41,8 @@ cont_esp = 0
 data = date.today()
 indice_da_semana = data.weekday()
 dia_da_semana = dias[indice_da_semana]
+
+
 
 
 def car_esp():
@@ -94,9 +96,6 @@ def car_combo():
     print("""--------------------------------------
                COMBOS             
 --------------------------------------""")
-    print(f"""O COMBO {promoção_do_dia [indice_da_semana].split()[1]} ESTÁ EM PROMOÇÃO!!
-   Está custando {promoção_do_dia [indice_da_semana].split()[3]}
---------------------------------------""")
     print("""[1]- COMBO 1 - R$:28,00
 (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata))
 [2]- COMBO 2 - R$:22,00
@@ -135,6 +134,30 @@ def conta():
     print('Digite o endereço para a entrega.')
 
 
+def verificar_tipo_pedido(valor='0', limite=1):
+    while not valor.isdigit():
+        print('Digite um número inteiro por-favor')
+        valor = input(': ')
+    valor = int(valor)
+
+    if valor > limite or valor <= 0:
+        print('A opção que vôce digitou não é válida! Por-favor tente novamente')
+        return verificar_tipo_pedido(input(': '), limite)
+    return valor
+
+
+def verificar_quant_pedida(valor='0'):
+    while not valor.isdigit():
+        print('Digite um número inteiro por-favor')
+        valor = input(': ')
+    valor = int(valor)
+
+    if valor <= 0:
+        print('A opção que vôce digitou não é válida! Por-favor tente novamente')
+        return verificar_tipo_pedido(input(': '))
+    return valor
+
+
 def efetuar_pedidos():
     global lista_itens_factura
     global lista_precos_factura
@@ -152,28 +175,28 @@ def efetuar_pedidos():
     op_pedido = input('Digite a opção: ').strip()[0]
 
     if op_pedido == '1':
-        quant_esp = int(input('Quantos você deseja? '))
+        quant_esp = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_esp > 0:
             car_esp()
-            sabor = int(input(f'Dígite o sabor do Espetinho: '))
-            quant = int(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
+            sabor = verificar_tipo_pedido(input(f'Dígite o sabor do Espetinho: '), 12)
+            quant = verificar_quant_pedida(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
             while quant > quant_esp:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
                       f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
-                quant = int(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
+                quant = verificar_quant_pedida(input(f'Quantos {espetinho[sabor - 1][0]} você deseja: '))
             quant_esp -= quant
             lista_itens_factura.append(espetinho[sabor - 1][0])
             lista_precos_factura.append(espetinho[sabor - 1][1] * quant)
     elif op_pedido == '2':
-        quant_acom = int(input('Quantos você deseja? '))
+        quant_acom = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_acom > 0:
             car_acom()
-            op_acom = int(input(f'Dígite o Acompanhamento: '))
-            quant = int(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
+            op_acom = verificar_tipo_pedido(input(f'Dígite o Acompanhamento: '), 5)
+            quant = verificar_quant_pedida(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
             while quant > quant_acom:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
-                      f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
-                quant = int(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
+                      f'\nDigite uma quantidade que vai de 1 até {quant_acom}')
+                quant = verificar_quant_pedida(input(f'Quantos {acompanhamento[op_acom - 1][0]} você deseja: '))
             quant_acom -= quant
             lista_itens_factura.append(acompanhamento[op_acom - 1][0])
             lista_precos_factura.append(acompanhamento[op_acom - 1][1] * quant)
@@ -181,28 +204,33 @@ def efetuar_pedidos():
         quant_bebi = int(input('Quantos você deseja? '))
         while quant_bebi > 0:
             car_bebida()
-            op_bebi = int(input(f'Dígite a Bebida: '))
-            quant = int(input(f'Quantos {bebidas[op_bebi - 1][0]} você deseja: '))
+            op_bebi = verificar_tipo_pedido(input(f'Dígite a Bebida: '), 9)
+            quant = verificar_quant_pedida(input(f'Quantos {bebidas[op_bebi - 1][0]} você deseja: '))
             while quant > quant_bebi:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
-                      f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
-                quant = int(input(f'Quantas {bebidas[op_bebi - 1][0]} você deseja: '))
+                      f'\nDigite uma quantidade que vai de 1 até {quant_bebi}')
+                quant = verificar_quant_pedida(input(f'Quantas {bebidas[op_bebi - 1][0]} você deseja: '))
             quant_bebi -= quant
             lista_itens_factura.append(bebidas[op_bebi - 1][0])
             lista_precos_factura.append(bebidas[op_bebi - 1][1] * quant)
     elif op_pedido == '4':
-        quant_combo = int(input('Quantos você deseja? '))
+        quant_combo = verificar_quant_pedida(input('Quantos você deseja? '))
         while quant_combo > 0:
             car_combo()
-            op_combo = int(input(f'Dígite o Combo: '))
-            quant = int(input(f'Quantos {combos[op_combo - 1][0]} você deseja: '))
+            op_combo = verificar_tipo_pedido(input(f'Dígite o Combo: '), 7)
+            quant = verificar_quant_pedida(input(f'Quantos {combos[op_combo - 1][0]} você deseja: '))
             while quant > quant_combo:
                 print(f'Infelizmente você pediu uma quantidade inferior a essa!'
-                      f'\nDigite uma quantidade que vai de 1 até {quant_esp}')
-                quant = int(input(f'Quantas {combos[op_combo - 1][0]} você deseja: '))
+                      f'\nDigite uma quantidade que vai de 1 até {quant_combo}')
+                quant = verificar_quant_pedida(input(f'Quantas {combos[op_combo - 1][0]} você deseja: '))
             quant_combo -= quant
             lista_itens_factura.append(combos[op_combo - 1][0])
-            lista_precos_factura.append(combos[op_combo - 1][1] * quant)
+
+            if indice_da_semana == op_combo - 1:
+                print(f'O combo {op_combo}: {combos[op_combo - 1][0]} está custando R$ {combos[op_combo - 1][1] - 5}\nPorque está em promoção')
+                lista_precos_factura.append((combos[op_combo - 1][1] - 5) * quant)
+            else:
+                lista_precos_factura.append(combos[op_combo - 1][1] * quant)
     elif op_pedido == '5':
         lista_itens_factura.clear()
         lista_precos_factura.clear()
@@ -228,7 +256,7 @@ def op_pedi():
 def vol_car():
     print("""[1]- IR PARA O CARDÁPIO
 [2]- FAZER SEU PEDIDO
-[3]- VOLTAR AO MENU INICIAL
+[3[- VOLTAR AO MENU INICIAL
 --------------------------------------""")
     voltar = input('Dígite sua opção: ').strip()[0]
     if voltar != '1' and voltar != '2' and voltar != '3':
