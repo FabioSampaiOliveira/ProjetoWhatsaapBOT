@@ -96,6 +96,8 @@ def car_combo():
     print("""--------------------------------------
                COMBOS             
 --------------------------------------""")
+    print(f"""O COMBO {promoção_do_dia [indice_da_semana].split()[1]} ESTÁ EM PROMOÇÃO!!
+Está custando {promoção_do_dia [indice_da_semana].split()[3]}""")
     print("""[1]- COMBO 1 - R$:28,00
 (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata))
 [2]- COMBO 2 - R$:22,00
