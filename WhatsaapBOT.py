@@ -100,7 +100,7 @@ cont_esp = 0
 def vol_car():
     bot.Envia_Msg("""*SUAS OPÇÕES:*
     *[1]*- IR PARA O CARDÁPIO
-    *[2]*- ESTA OPÇÃO AINDA NÃO ESTÁ FEITA
+    *[2]*- FAZER O PEDIDO
     *[3]*- VOLTAR AO MENU INICIAL
     *|---------------------------|*""")
     msg = ""  # Criando a variável msg
@@ -110,7 +110,7 @@ def vol_car():
         if msg == "1":
             cardapio()
         if msg == "2":
-            bot.Envia_Msg("falta fazer")
+            efetuar_pedidos()
         elif msg == "3":
             Menu_Ini()
 
