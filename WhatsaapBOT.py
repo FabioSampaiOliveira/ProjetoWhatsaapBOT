@@ -5,7 +5,6 @@ from datetime import date
 
 
 class WhatsaapBot:
-
     def __init__(self):
         options = webdriver.ChromeOptions()
         # Configurando a pasta profile, para mantermos os dados da seção
@@ -18,14 +17,12 @@ class WhatsaapBot:
         self.driver.implicitly_wait(10)
         self.grupos_ou_pessoas = ["Eufranio Python"]
 
-
     def Abre_Conversa(self, contato):
         caixa_de_pesquisa = self.driver.find_element_by_class_name("_2S1VP")
         caixa_de_pesquisa.send_keys(contato)
         sleep(2)
         contato = self.driver.find_element_by_xpath("//span[@title = '{}']".format(contato))
         contato.click()
-
 
     def Envia_Msg(self, msg):
         """ Envia uma mensagem para a conversa aberta """
@@ -41,10 +38,8 @@ class WhatsaapBot:
         botao_enviar.click()
         sleep(2)
 
-
     def sair(self):
         self.driver.quit
-
 
     def Ultima_Msg(self, mensagem=""):
         """ Captura a ultima mensagem da conversa """
@@ -55,6 +50,7 @@ class WhatsaapBot:
         # O texto da ultima mensagem
         texto = post[ultimo].find_element_by_css_selector("span.selectable-text").text
         return texto
+
 
 dias = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-Feira', 'Sexta-feira', 'Sábado', 'Domingo']
 
@@ -71,7 +67,7 @@ acompanhamento = [('PÃO DE ALHO - R$: 6,00', 6.00), ('BATATA FRITA (P) - R$: 8,
 
 bebidas = [('COCA-COLA 350ml (lata) - R$: 5,00', 5.00), ('COCA-COLA (1 litro) - R$: 9,00', 9.00),
            ('GUARANÁ 269ml (lata) - R$: 3,00', 3.00), ('GUARANÁ 350ml (lata) - R$: 3,50', 3.50),
-           ('GUARANÁ (1 litro) - R$: 9,00', 9.00),('ÁGUA 300ml (sem gás) - R$: 3,00', 3.00),
+           ('GUARANÁ (1 litro) - R$: 9,00', 9.00), ('ÁGUA 300ml (sem gás) - R$: 3,00', 3.00),
            ('ÁGUA 300ml (com gás) - R$: 4,00', 4.00), ('DEVASSA PURO MALTE 350ml (lata) - R$: 5,00', 5.00),
            ('HEINEKEN (long neck) - R$: 9,00', 9.00)]
 
@@ -79,15 +75,18 @@ combos = [('COMBO 1 - R$: 28,00', 28.00), ('COMBO 2 - R$: 22,00', 22.00), ('COMB
           ('COMBO 4 - R$: 22,00', 22.00), ('COMBO 5 - R$: 22,00', 22.00), ('COMBO 6 - R$: 35,00', 35.00),
           ('COMBO 7 - R$: 35,00', 35.00)]
 
-promoção_do_dia = [
-        'COMBO 1 - R$: 28,00 (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata)',
-        'COMBO 2 - R$: 17,00 (1 Espeto de Picanha + Batata Frita (P) + 1 Guaraná 269ml (lata))',
-        'COMBO 3 - R$: 28,00 (File Acebolado + Batata Frita (M) + 1 Guaraná 269ml (lata))',
-        'COMBO 4 - R$: 17,00 (1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata)',
-        'COMBO 5 - R$: 17,00 (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Guaraná 269ml (lata))',
-        'COMBO 6 - R$: 30,00 (Carne do Sol Acebolada + Batata Frita (M) + 1 Guaraná 269ml (lata))',
-        'COMBO 7 - R$: 30,00 (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))']
+combos1 = ['COMBO 1 - R$: 23,00', 'COMBO 2 - R$: 17,00', 'COMBO 3 - R$: 30,00',
+          'COMBO 4 - R$: 17,00', 'COMBO 5 - R$: 17,00', 'COMBO 6 - R$: 30,00',
+          'COMBO 7 - R$: 30,00']
 
+promoção_do_dia = [
+    'COMBO 1 - R$: 28,00 (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata)',
+    'COMBO 2 - R$: 17,00 (1 Espeto de Picanha + Batata Frita (P) + 1 Guaraná 269ml (lata))',
+    'COMBO 3 - R$: 28,00 (File Acebolado + Batata Frita (M) + 1 Guaraná 269ml (lata))',
+    'COMBO 4 - R$: 17,00 (1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata)',
+    'COMBO 5 - R$: 17,00 (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Guaraná 269ml (lata))',
+    'COMBO 6 - R$: 30,00 (Carne do Sol Acebolada + Batata Frita (M) + 1 Guaraná 269ml (lata))',
+    'COMBO 7 - R$: 30,00 (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))']
 
 data = date.today()
 indice_da_semana = data.weekday()
@@ -95,6 +94,28 @@ dia_da_semana = dias[indice_da_semana]
 lista_itens_factura = []
 lista_precos_factura = []
 cont_esp = 0
+
+
+def Continuar():
+    bot.Envia_Msg("""*SUAS OPÇÕES:*
+    *[1]*- CONTINUAR COMPRANDO
+    *[2]*- CANCELAR PEDIDO
+    *[3]*- FINALIZAR PEDIDO
+    *|---------------------------|*""")
+    msg = ""  # Criando a variável msg
+    while True:
+        msg = bot.Ultima_Msg()
+        if msg == "1":
+            efetuar_pedidos()
+        if msg == "2":
+            lista_itens_factura.clear()
+            lista_precos_factura.clear()
+        elif msg == "3":
+            bot.Envia_Msg("*Seu pedido foi realizado com sucesso!*")
+            conta()
+            break
+    exit()
+
 
 
 def vol_car():
@@ -105,12 +126,11 @@ def vol_car():
     *|---------------------------|*""")
     msg = ""  # Criando a variável msg
     while msg != "3":
-        sleep(1)
         msg = bot.Ultima_Msg()  # A cada loop recebe a ultima mensagem da conversa
         if msg == "1":
             cardapio()
         if msg == "2":
-            efetuar_pedidos()
+            op_pedi()
         elif msg == "3":
             Menu_Ini()
 
@@ -131,7 +151,7 @@ def car_esp():
     *[11]*- MEDALHÃO DE CARNE - R$: 13,50
     *[12]*- MEDALHÃO DE FRANGO - R$: 11,50
     *|---------------------------|*""")
-    vol_car()
+
 
 def car_acom():
     bot.Envia_Msg("""*ACOMPANHAMENTOS*
@@ -142,7 +162,7 @@ def car_acom():
     *[4]*- BATATA FRITA (G) - R$: 24,00
     *[5]*- QUEIJO ASSADO c/MELAÇO OU s/MELAÇO R$: 8,00
     *|---------------------------|*""")
-    vol_car()
+
 
 def car_bebida():
     bot.Envia_Msg("""*BEBIDAS*
@@ -157,7 +177,7 @@ def car_bebida():
     *[8]*- DEVASSA PURO MALTE 350ml (lata) - R$: 5,00
     *[9]*- HEINEKEN (long neck) - R$: 9,00
     *|---------------------------|*""")
-    vol_car()
+
 
 def car_combo():
     if indice_da_semana == 0:
@@ -189,33 +209,30 @@ def car_combo():
     else:
         comb7 = "R$: 35,00"
 
-
     bot.Envia_Msg(f"""*COMBOS*
     *|---------------------------|*
-    *O COMBO {promoção_do_dia [indice_da_semana].split()[1]} ESTÁ EM PROMOÇÃO!!
-    
+
     *[1]*- COMBO 1 - R$: {comb1}
     (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata))
-    
+
     *[2]*- COMBO 2 - R$: {comb2}
     (1 Espeto de Picanha + Batata Frita (P) + 1 Guaraná 269ml (lata))
-    
+
     *[3]*- COMBO 3 - {comb3}
     (File Acebolado + Batata Frita (M) + 1 Guaraná 269ml (lata))
-    
+
     *[4]*- COMBO 4 - {comb4}
     (1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))
-    
+
     *[5]*- COMBO 5 - {comb5}
     (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Guaraná 269ml (lata))
-    
+
     *[6]*- COMBO 6 - {comb6}
     (Carne do Sol Acebolada + Batata Frita (M) + 1 Guaraná 269ml (lata))
-    
+
     *[7]*- COMBO 7 - {comb7}
     (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))
     *|---------------------------|*""")
-    vol_car()
 
 
 def car_esp1():
@@ -301,22 +318,16 @@ def car_combo1():
     *|---------------------------|*
     COMBO 1 - R$: {comb1}
     (Batata Frita (P) + 1 Espeto de Picanha + Pão de Alho + 1 Guaraná 269ml (lata))
-
     COMBO 2 - R$: {comb2}
     (1 Espeto de Picanha + Batata Frita (P) + 1 Guaraná 269ml (lata))
-
     COMBO 3 - {comb3}
     (File Acebolado + Batata Frita (M) + 1 Guaraná 269ml (lata))
-
     COMBO 4 - {comb4}
     (1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))
-
     COMBO 5 - {comb5}
     (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Guaraná 269ml (lata))
-
     COMBO 6 - {comb6}
     (Carne do Sol Acebolada + Batata Frita (M) + 1 Guaraná 269ml (lata))
-
     COMBO 7 - {comb7}
     (1 Pão de Alho + 1 Espeto de Carne + 1 Espeto de Frango + 1 Espeto de Calabresa Defumada + 1 Guaraná 269ml (lata))
     *|---------------------------|*""")
@@ -360,9 +371,29 @@ def conta():
         bot.Envia_Msg(f'{lista_itens_factura[i]}')
         preco_final += lista_precos_factura[i]
     bot.Envia_Msg(f"""*|---------------------------|*
-    Total a pagar: R$ {preco_final:.2f}
+    *Total a pagar: R$ {preco_final:.2f}*
     *|---------------------------|*
-    Digite o endereço para a entrega.""")
+    *Digite o endereço para a entrega.*""")
+
+
+def verificar_numero_inteiro():
+    numero_sendo_testado = ""
+
+    while not numero_sendo_testado.isdigit():
+        numero_sendo_testado = bot.Ultima_Msg()
+    return numero_sendo_testado
+
+
+def verificar_tipo_pedido(numero_sendo_testado='0', limite=1):
+    while not numero_sendo_testado.isdigit():
+        numero_sendo_testado = bot.Ultima_Msg()
+    numero_sendo_testado = int(numero_sendo_testado)
+
+    if numero_sendo_testado > limite:
+        bot.Envia_Msg("A opção que você digitou não é válida! Por-favor tente novamente")
+        return verificar_tipo_pedido(verificar_numero_inteiro(), limite)
+    return numero_sendo_testado
+
 
 def efetuar_pedidos():
     global lista_itens_factura
@@ -374,114 +405,111 @@ def efetuar_pedidos():
     *[2]*- ACOMPANHAMENTO
     *[3]*- BEBIDAS
     *[4]*- COMBOS
-    *[5]*- CANCERLAR PEDIDO
-    *[6]*- EFETUAR PEDIDO
     *|---------------------------|*""")
 
-    op_pedido = bot.Ultima_Msg("Digite a opção:").strip()[0]
+    op_pedido = ""
+    while op_pedido != '6':
+        op_pedido = verificar_numero_inteiro()
 
-    if op_pedido == '1':
-        quant_esp = verificar_quant_pedida(bot.Ultima_Msg("Quantos você deseja?"))
-        while quant_esp > 0:
-            car_esp()
-            sabor = verificar_tipo_pedido(bot.Ultima_Msg(f"Dígite o sabor do Espetinho:"), 12)
-            quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {espetinho[sabor - 1][0]} você deseja:"))
-            while quant > quant_esp:
-                bot.Envia_Msg(f"""Infelizmente você pediu uma quantidade inferior a essa!
-                Digite uma quantidade que vai de 1 até {quant_esp}""")
-                quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {espetinho[sabor - 1][0]} você deseja:"))
-            quant_esp -= quant
-            lista_itens_factura.append(espetinho[sabor - 1][0])
-            lista_precos_factura.append(espetinho[sabor - 1][1] * quant)
-    elif op_pedido == '2':
-        quant_acom = verificar_quant_pedida(bot.Ultima_Msg("Quantos você deseja?"))
-        while quant_acom > 0:
-            car_acom()
-            op_acom = verificar_tipo_pedido(bot.Ultima_Msg(f"Dígite o Acompanhamento:"), 5)
-            quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {acompanhamento[op_acom - 1][0]} você deseja:"))
-            while quant > quant_acom:
-                bot.Envia_Msg(f"""Infelizmente você pediu uma quantidade inferior a essa!
-                Digite uma quantidade que vai de 1 até {quant_acom}""")
-                quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {acompanhamento[op_acom - 1][0]} você deseja:"))
-            quant_acom -= quant
-            lista_itens_factura.append(acompanhamento[op_acom - 1][0])
-            lista_precos_factura.append(acompanhamento[op_acom - 1][1] * quant)
-    elif op_pedido == '3':
-        quant_bebi = int(bot.Ultima_Msg("Quantos você deseja?"))
-        while quant_bebi > 0:
-            car_bebida()
-            op_bebi = verificar_tipo_pedido(bot.Ultima_Msg(f"Dígite a Bebida:"), 9)
-            quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {bebidas[op_bebi - 1][0]} você deseja:"))
-            while quant > quant_bebi:
-                bot.Envia_Msg(f"""Infelizmente você pediu uma quantidade inferior a essa!
-                Digite uma quantidade que vai de 1 até {quant_bebi}""")
-                quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantas {bebidas[op_bebi - 1][0]} você deseja:"))
-            quant_bebi -= quant
-            lista_itens_factura.append(bebidas[op_bebi - 1][0])
-            lista_precos_factura.append(bebidas[op_bebi - 1][1] * quant)
-    elif op_pedido == '4':
-        quant_combo = verificar_quant_pedida(bot.Ultima_Msg("Quantos você deseja?"))
-        while quant_combo > 0:
-            car_combo()
-            op_combo = verificar_tipo_pedido(bot.Ultima_Msg(f"Dígite o Combo:"), 7)
-            quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantos {combos[op_combo - 1][0]} você deseja:"))
-            while quant > quant_combo:
-                bot.Envia_Msg(f"""Infelizmente você pediu uma quantidade inferior a essa!
-                Digite uma quantidade que vai de 1 até {quant_combo}""")
-                quant = verificar_quant_pedida(bot.Ultima_Msg(f"Quantas {combos[op_combo - 1][0]} você deseja:"))
-            quant_combo -= quant
-            lista_itens_factura.append(combos[op_combo - 1][0])
+        if op_pedido == '1':
+            bot.Envia_Msg("*Quantos você deseja?*")
+            quant_esp = int(verificar_numero_inteiro())
+            while quant_esp > 0:
+                car_esp()
+                sabor = verificar_tipo_pedido(verificar_numero_inteiro(), 12)
+                bot.Envia_Msg(f"*Quantos {espetinho[sabor - 1][0]} você deseja:*")
+                quant = int(verificar_numero_inteiro())
 
-            if indice_da_semana == op_combo - 1:
-                bot.Envia_Msg(f"""O combo {op_combo}: {combos[op_combo - 1][0]} 
-                está custando R$ {combos[op_combo - 1][1] - 5}  
-                Porque está em promoção""")
-                lista_precos_factura.append((combos[op_combo - 1][1] - 5) * quant)
-            else:
-                lista_precos_factura.append(combos[op_combo - 1][1] * quant)
-    elif op_pedido == '5':
-        lista_itens_factura.clear()
-        lista_precos_factura.clear()
-    elif op_pedido == '6':
-        return False
-    return True
+                while quant > quant_esp:
+                    bot.Envia_Msg(f"""*Infelizmente você pediu uma quantidade inferior a essa!
+                    Digite uma quantidade que vai de 1 até {quant_esp}*""")
+                    bot.Envia_Msg(f"*Quantos {espetinho[sabor - 1][0]} você deseja:*")
+                    quant = int(verificar_numero_inteiro())
+                quant_esp -= quant
+                lista_itens_factura.append(espetinho[sabor - 1][0])
+                lista_precos_factura.append(espetinho[sabor - 1][1] * quant)
+            Continuar()
+        elif op_pedido == '2':
+            bot.Envia_Msg("*Quantos você deseja?*")
+            quant_acom = int(verificar_numero_inteiro())
+            while quant_acom > 0:
+                car_acom()
+                op_acom = verificar_tipo_pedido(verificar_numero_inteiro(), 5)
+                bot.Envia_Msg(f"*Quantos {acompanhamento[op_acom - 1][0]} você deseja:*")
+                quant = int(verificar_numero_inteiro())
 
+                while quant > quant_acom:
+                    bot.Envia_Msg(f"""*Infelizmente você pediu uma quantidade inferior a essa!
+                    Digite uma quantidade que vai de 1 até {quant_acom}*""")
+                    bot.Envia_Msg(f"*Quantos {acompanhamento[op_acom - 1][0]} você deseja:*")
+                    quant = int(verificar_numero_inteiro())
+                quant_acom -= quant
+                lista_itens_factura.append(acompanhamento[op_acom - 1][0])
+                lista_precos_factura.append(acompanhamento[op_acom - 1][1] * quant)
+            Continuar()
+        elif op_pedido == '3':
+            bot.Envia_Msg("*Quantas você deseja?*")
+            quant_bebi = int(verificar_numero_inteiro())
+            while quant_bebi > 0:
+                car_bebida()
+                op_bebi = verificar_tipo_pedido(verificar_numero_inteiro(), 9)
+                bot.Envia_Msg(f"*Quantos {bebidas[op_bebi - 1][0]} você deseja:*")
+                quant = int(verificar_numero_inteiro())
 
-def verificar_tipo_pedido(valor='0', limite=1):
-    while not valor.isdigit():
-        bot.Envia_Msg("Digite um número inteiro por-favor")
-        valor = bot.Ultima_Msg(': ')
-    valor = int(valor)
+                while quant > quant_bebi:
+                    bot.Envia_Msg(f"""*Infelizmente você pediu uma quantidade inferior a essa!
+                    Digite uma quantidade que vai de 1 até {quant_bebi}*""")
+                    bot.Envia_Msg(f"*Quantos {bebidas[op_bebi - 1][0]} você deseja:*")
+                    quant = int(verificar_numero_inteiro())
+                quant_bebi -= quant
+                lista_itens_factura.append(bebidas[op_bebi - 1][0])
+                lista_precos_factura.append(bebidas[op_bebi - 1][1] * quant)
+            Continuar()
+        elif op_pedido == '4':
+            bot.Envia_Msg("*Quantos você deseja?*")
+            quant_combo = int(verificar_numero_inteiro())
+            while quant_combo > 0:
+                car_combo()
+                op_combo = verificar_tipo_pedido(verificar_numero_inteiro(), 7)
+                bot.Envia_Msg(f"*Quantos {combos[op_combo - 1][0]} você deseja:*")
+                quant = int(verificar_numero_inteiro())
 
-    if valor > limite or valor <= 0:
-        bot.Envia_Msg("A opção que você digitou não é válida! Por-favor tente novamente")
-        return verificar_tipo_pedido(bot.Ultima_Msg(': '), limite)
-    return valor
-
-
-def verificar_quant_pedida(valor='0'):
-    while not valor.isdigit():
-        bot.Envia_Msg("Digite um número inteiro por-favor")
-        valor = bot.Ultima_Msg(': ')
-    valor = int(valor)
-
-    if valor <= 0:
-        bot.Envia_Msg("A opção que você digitou não é válida! Por-favor tente novamente")
-        return verificar_tipo_pedido(bot.Ultima_Msg(': '))
-    return valor
+                while quant > quant_combo:
+                    bot.Envia_Msg(f"""*Infelizmente você pediu uma quantidade inferior a essa!
+                    Digite uma quantidade que vai de 1 até {quant_combo}*""")
+                    bot.Envia_Msg(f"*Quantos {combos[op_combo - 1][0]} você deseja:*")
+                    quant = int(verificar_numero_inteiro())
+                quant_combo -= quant
+                if indice_da_semana == op_combo - 1:
+                    bot.Envia_Msg(f"""*O combo {op_combo}: {combos[op_combo - 1][0]} 
+                    está custando R$ {combos[op_combo - 1][1] - 5}  
+                    Porque está em promoção*""")
+                    lista_itens_factura.append(combos1[op_combo - 1])
+                    lista_precos_factura.append((combos[op_combo - 1][1] - 5) * quant)
+                else:
+                    lista_itens_factura.append(combos[op_combo - 1][0])
+                    lista_precos_factura.append(combos[op_combo - 1][1] * quant)
+            Continuar()
+#-------------------------------------------------------------------------------------
+            #elif op_pedido == '5':
+        #    lista_itens_factura.clear()
+        #    lista_precos_factura.clear()
+        #elif op_pedido == '6':
+        #    return False
+        #return True
 
 
-def op_pedi():
-    flag = efetuar_pedidos()
-    while True:
-        flag = efetuar_pedidos()
-
-        if flag == False:
-            bot.Envia_Msg("*Seu pedido foi realizado com sucesso!*")
-            conta()
-            break
-    exit()
-
+#def op_pedi():
+#    flag = efetuar_pedidos()
+#    while True:
+#        flag = efetuar_pedidos()
+#
+#        if flag == False:
+#            bot.Envia_Msg("*Seu pedido foi realizado com sucesso!*")
+#            conta()
+#            break
+#    exit()
+#-------------------------------------------------------------------------------------
 
 def promocao_do_dia():
     bot.Envia_Msg(f"""*PROMOÇÃO DO DIA ({dia_da_semana})
@@ -506,7 +534,7 @@ def Menu_Ini():
         if msg == "2":
             cardapio()
         if msg == "3":
-            op_pedi()
+            efetuar_pedidos()
         elif msg == "4":  # Encerra o programa
             bot.Envia_Msg("*Obrigado, volte sempre.*")
             break
