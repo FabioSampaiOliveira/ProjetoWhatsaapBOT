@@ -131,7 +131,7 @@ def vol_car():
         if msg == "1":
             cardapio()
         if msg == "2":
-            op_pedi()
+            efetuar_pedidos()
         elif msg == "3":
             Menu_Ini()
 
